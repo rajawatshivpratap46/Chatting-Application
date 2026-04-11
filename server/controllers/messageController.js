@@ -1,7 +1,7 @@
-import Message from "../models/Message";
+import Message from "../models/Message.js";
 import User from "../models/User.js";
 import cloudinary from "../lib/cloudinary.js";
-import {io,userSocketMap} from "../server";
+import {io,userSocketMap} from "../server.js";
 
 
 // Get all users except the logged in user
@@ -62,7 +62,7 @@ export const markMessageAsSeen = async(req,res)=>{
 }
 
 // Send messages to selected user
-export const sendMessage = async(res,res) =>{
+export const sendMessage = async(req,res) =>{
     try{
       const {text,image} =req.body;
       const receiverId = req.params.id;
