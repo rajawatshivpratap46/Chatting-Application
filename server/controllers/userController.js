@@ -20,7 +20,7 @@ export const signup = async (req,res)=>{
         const salt = await bcrypt.genSalt(10);
         const hashedPassword =await bcrypt.hash(password, salt);
 
-        const newUser = await user.create({
+        const newUser = await User.create({
             fullName, email, password: hashedPassword,bio
         });
 
@@ -39,7 +39,7 @@ export const signup = async (req,res)=>{
 export const login =async (req,res) =>{
     try{
        const { email, password } = req.body;
-       const userDate = await User.findOne({email})
+       const userData = await User.findOne({email})
 
        const isPasswordCorrect = await bcrypt.compare(password,userData.password);
 
@@ -75,10 +75,10 @@ export const updateProfile = async(req,res)=>{
         } else{
             const upload = await cloudinary.uploader.upload(profilePic);
 
-            updatedUser =await User.findByIdAndUpdate(userId,{profilePic:upload.
+            updateUser =await User.findByIdAndUpdate(userId,{profilePic:upload.
             secure_url , bio, fullName}, {new:true});
         }
-        res.json({success:true,user:updatedUser})
+        res.json({success:true,user:updateUser})
     } catch (error){
          console.log(error.message);
          res.json({success:false,message:error.message})
